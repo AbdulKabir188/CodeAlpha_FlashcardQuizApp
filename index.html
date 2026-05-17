@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flashcard Quiz App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Flashcards
+    </div>
+    <div class="progress-badge" id="progress">0 / 0</div>
+  </div>
+
+  <div class="score-bar" id="score-bar">
+    <span class="score-pill pill-known">✓ <span id="known-count">0</span> known</span>
+    <span class="score-pill pill-learning">✗ <span id="unknown-count">0</span> learning</span>
+    <span class="score-pill pill-left"><span id="left-count">0</span> remaining</span>
+  </div>
+
+  <div class="card-scene" id="card-scene" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face front">
+        <div class="face-label">Question</div>
+        <div class="face-text" id="front-text">Add a card to get started</div>
+        <div class="face-hint" id="flip-hint">Click card to reveal answer</div>
+      </div>
+      <div class="card-face back">
+        <div class="face-label">Answer</div>
+        <div class="face-text" id="back-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tools-row">
+    <button id="shuffle-btn" onclick="toggleShuffle()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      Shuffle
+    </button>
+    <button onclick="resetMarks()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+      Reset progress
+    </button>
+  </div>
+
+  <div class="btn-row">
+    <button onclick="prevCard()" id="btn-prev" disabled>
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Previous
+    </button>
+    <button class="primary" onclick="flipCard()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      Show answer
+    </button>
+    <button onclick="nextCard()" id="btn-next" disabled>
+      Next
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <div class="mark-row" id="mark-row">
+    <button class="danger" onclick="markCard(false)">✗ Still learning</button>
+    <button class="success" onclick="markCard(true)">✓ Got it!</button>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section-head">
+    Deck <span class="count" id="deck-count">0</span>
+    <span class="spacer"></span>
+    <button class="primary" onclick="openAdd()" style="font-size:13px;padding:6px 14px">+ Add card</button>
+  </div>
+
+  <div class="deck-list" id="deck-list">
+    <div class="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      No flashcards yet — add one above!
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOverlay(event)">
+  <div class="modal">
+    <h3 id="modal-title">Add flashcard</h3>
+    <div class="field">
+      <label>Question</label>
+      <textarea id="m-q" placeholder="Enter your question…" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <label>Answer</label>
+      <textarea id="m-a" placeholder="Enter the answer…" rows="3"></textarea>
+    </div>
+    <div class="modal-btns">
+      <button onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="saveCard()" id="modal-save-btn">Add card</button>
+    </div>
+  </div>
+</div>
+<script src="/script.js"></script>
+</body>
+</html>
